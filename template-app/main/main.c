@@ -1,6 +1,11 @@
 #include <stdio.h>
 #include "freertos/FreeRTOS.h"
+#include "freertos/task.h"
 #include "freertos/timers.h"
+#include "driver/gpio.h"
+
+#define temp 4
+#define fan 5
 
 long long int Ctime, Ptime, Etime = 0;
 
@@ -31,14 +36,14 @@ double PID (float input){
     return output;
 }
 
-void app_main(void)
-{
-    //printf("\n");
-    //printf("Timer: %lld microsseconds\n", esp_timer_get_time());
+void app_main(void){
+
+    gpio_reset_pin(fan);
+    //gpio_set_direction(temp, GPIO_MODE_INPUT);
+    gpio_set_direction(fan, GPIO_MODE_INPUT);
+
     while(1){
-        PID(9);
+        gpio_set_level(fan, 1);
     }   
     
 }
-
-
